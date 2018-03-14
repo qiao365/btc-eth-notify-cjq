@@ -37,7 +37,8 @@ eth.bulkCreateEthAddress = function bulkCreateEthAddress(quantity, usage) {
             status: "ok",
             sqldata: addressInstanceArray.map((ele) => {
                 let ej = ele.toJSON();
-                return `insert into t_lib_eth (status, address, created_at, updated_at) values ('ok', '${ej.address}', now(), now());`;
+                // return `insert into t_lib_eth (status, address, created_at, updated_at) values ('ok', '${ej.address}', now(), now());`;
+                return `insert into pool_addresses (address, created_at, updated_at,currency,used) values ('${ej.address}', now(), now(),3,0);`;
             }),
             msg: `generate ${quantity} eth address`
         };
@@ -287,48 +288,48 @@ let bulkGetTransaction = function(theBlock, addressMap){
 //     });
 // }
 
-//解锁账户啊！
-function unlockAddress(account, password) {
-    account = "0x007e62c3f5f19d41c943f252531fcdb25a374a23";
-    password = "123456789"
-    return new Promise((resolve, reject) => {
-        let client = net.connect(`${datadir}/geth.ipc`, () => {
-            client.write(JSON.stringify({ "jsonrpc": "2.0", "method": "personal_unlockAccount", "params": [account,password,300], "id": 1 }));//300s默认的
-        });
-        let dataString = '';
-        client.on('data', (data) => {
-            dataString += data.toString();
-            client.end();
-        });
-        client.on('end', () => {
-            let data = JSON.parse(dataString);
-            if (data.error) {
-                reject(data.error);
-            } else {
-                // console.log("back"+JSON.stringify(data));
-                // var hash = rpcWeb3.eth.sendTransaction({from: "0x007e62c3f5f19d41c943f252531fcdb25a374a23", to: '0xa8ade7feab1ece71446bed25fa0cf6745c19c3d5', value: web3.toWei(1, "ether")});
-                // console.log("hash:"+hash);
-                sendTransaction();
-                // "jsonrpc":"2.0","id":1,"result":true
-                resolve({
-                    address: data.result
-                });
-            };
-            client.destroy();
-        });
-    });
-};
+// //解锁账户啊！
+// function unlockAddress(account, password) {
+//     account = "0x007e62c3f5f19d41c943f252531fcdb25a374a23";
+//     password = "123456789"
+//     return new Promise((resolve, reject) => {
+//         let client = net.connect(`${datadir}/geth.ipc`, () => {
+//             client.write(JSON.stringify({ "jsonrpc": "2.0", "method": "personal_unlockAccount", "params": [account,password,300], "id": 1 }));//300s默认的
+//         });
+//         let dataString = '';
+//         client.on('data', (data) => {
+//             dataString += data.toString();
+//             client.end();
+//         });
+//         client.on('end', () => {
+//             let data = JSON.parse(dataString);
+//             if (data.error) {
+//                 reject(data.error);
+//             } else {
+//                 // console.log("back"+JSON.stringify(data));
+//                 // var hash = rpcWeb3.eth.sendTransaction({from: "0x007e62c3f5f19d41c943f252531fcdb25a374a23", to: '0xa8ade7feab1ece71446bed25fa0cf6745c19c3d5', value: web3.toWei(1, "ether")});
+//                 // console.log("hash:"+hash);
+//                 sendTransaction();
+//                 // "jsonrpc":"2.0","id":1,"result":true
+//                 resolve({
+//                     address: data.result
+//                 });
+//             };
+//             client.destroy();
+//         });
+//     });
+// };
 
-function sendTransaction(){
-    var tx = {from: "0x007e62c3f5f19d41c943f252531fcdb25a374a23", to: '0xa8ade7feab1ece71446bed25fa0cf6745c19c3d5', value: rpcWeb3.toWei(1, "ether")};
-        rpcWeb3.eth.sendTransaction(tx,  (err, hash)=>{
-            if (err) {
-                console.log("hash:"+err);
-            } else {
-                console.log("hash:"+hash);
-            }
-        });
-}
+// function sendTransaction(){
+//     var tx = {from: "0x007e62c3f5f19d41c943f252531fcdb25a374a23", to: '0xa8ade7feab1ece71446bed25fa0cf6745c19c3d5', value: rpcWeb3.toWei(1, "ether")};
+//         rpcWeb3.eth.sendTransaction(tx,  (err, hash)=>{
+//             if (err) {
+//                 console.log("hash:"+err);
+//             } else {
+//                 console.log("hash:"+hash);
+//             }
+//         });
+// }
 
 
 // function start(){

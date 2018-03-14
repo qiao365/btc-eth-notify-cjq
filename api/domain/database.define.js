@@ -2,7 +2,7 @@
 
 const Sequelize = require('./bitapp.prepare').Sequelize;
 const sequelize = require('./bitapp.prepare').sequelize;
-const redis = require('./bitapp.prepare').redis;
+// const redis = require('./bitapp.prepare').redis;
 
 const KEYS = require("../model/oauth2.model").KEYS;
 

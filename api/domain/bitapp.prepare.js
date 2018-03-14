@@ -14,10 +14,10 @@ var sequelize = new Sequelize(APP, APP, `${APP}`, {
 });
 
 var bluebird = require('bluebird');
-var redisdb = require('redis');
-var redis = redisdb.createClient();
-bluebird.promisifyAll(redisdb.RedisClient.prototype);
-bluebird.promisifyAll(redisdb.Multi.prototype);
+// var redisdb = require('redis');
+// var redis = redisdb.createClient();
+// bluebird.promisifyAll(redisdb.RedisClient.prototype);
+// bluebird.promisifyAll(redisdb.Multi.prototype);
 /**
 //如果时区不正确，则需要放开
 require('pg').types.setTypeParser(1114, stringValue => {
@@ -29,10 +29,10 @@ require('pg').types.setTypeParser(1114, stringValue => {
 初始化数据
 **/
 
-redis.hmset(`${KEYS.client}${APP}`, {
-    clientId: APP,
-    clientSecret: 'a1d405a9257191a9dcaca'
-});
+// redis.hmset(`${KEYS.client}${APP}`, {
+//     clientId: APP,
+//     clientSecret: 'a1d405a9257191a9dcaca'
+// });
 const CONFIG = {
     ethereum:{
         rpc:"http://192.168.1.10:8545"
@@ -66,5 +66,5 @@ const CONFIG = {
 
 exports.sequelize = sequelize;
 exports.Sequelize = Sequelize;
-exports.redis = redis;
+// exports.redis = redis;
 exports.CONFIG = CONFIG;

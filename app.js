@@ -14,9 +14,9 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended:true }));
 app.use(bodyParser.json());
 
-app.oauth = new oauthServer({
-    model: require('./api/model/oauth2.model')
-});
+// app.oauth = new oauthServer({
+//     model: require('./api/model/oauth2.model')
+// });
 
 // app.get("/account/eth/:userIdentifier/:password", controllerOfEth.getAccountByUserIdentifier);
 // app.get("/account/btc/:userIdentifier/:password", controllerOfBtc.getAccountByUserIdentifier);

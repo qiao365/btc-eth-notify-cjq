@@ -1,0 +1,28 @@
+liuhanrudeMacBook-Pro:bitcoin liuhr$ src/bitcoin-cli -datadir="/Users/liuhr/data/blockdata/bitcoin/prod" -conf=$HOME/Library/Application\ Support/Bitcoin/bitcoin.conf getnewaddress liuhr
+13Rd8336cvqDkoSxJtQTf3fgisXpDruWNt
+liuhanrudeMacBook-Pro:bitcoin liuhr$ src/bitcoin-cli -datadir="/Users/liuhr/data/blockdata/bitcoin/prod" -conf=$HOME/Library/Application\ Support/Bitcoin/bitcoin.conf listaccounts
+{
+  "": 0.00000000,
+  "liuhr": 0.00000000
+}
+liuhanrudeMacBook-Pro:bitcoin liuhr$ src/bitcoin-cli -datadir="/Users/liuhr/data/blockdata/bitcoin/prod" -conf=$HOME/Library/Application\ Support/Bitcoin/bitcoin.conf getnewaddress liuhr
+1F56HwBoX3tW4yBMbswmh5JsU43aJR8Cnz
+liuhanrudeMacBook-Pro:bitcoin liuhr$ src/bitcoin-cli -datadir="/Users/liuhr/data/blockdata/bitcoin/prod" -conf=$HOME/Library/Application\ Support/Bitcoin/bitcoin.conf getaccountaddress liuhr
+17DQKMA336SXNuLUckT8w8DbvWuVuzprZJ
+
+liuhanrudeMacBook-Pro:bitcoin liuhr$ src/bitcoin-cli -datadir="/Users/liuhr/data/blockdata/bitcoin/prod" -conf=$HOME/Library/Application\ Support/Bitcoin/bitcoin.conf getaccount 13Rd8336cvqDkoSxJtQTf3fgisXpDruWNt
+liuhr
+liuhanrudeMacBook-Pro:bitcoin liuhr$ src/bitcoin-cli -datadir="/Users/liuhr/data/blockdata/bitcoin/prod" -conf=$HOME/Library/Application\ Support/Bitcoin/bitcoin.conf getaccount 1F56HwBoX3tW4yBMbswmh5JsU43aJR8Cnz
+liuhr
+liuhanrudeMacBook-Pro:bitcoin liuhr$ src/bitcoin-cli -datadir="/Users/liuhr/data/blockdata/bitcoin/prod" -conf=$HOME/Library/Application\ Support/Bitcoin/bitcoin.conf getaccount 17DQKMA336SXNuLUckT8w8DbvWuVuzprZJ
+liuhr
+
+liuhanrudeMacBook-Pro:bitcoin liuhr$ src/bitcoin-cli -datadir="/Users/liuhr/data/blockdata/bitcoin/prod" -conf=$HOME/Library/Application\ Support/Bitcoin/bitcoin.conf setaccount 17DQKMA336SXNuLUckT8w8DbvWuVuzprZJ futhark
+liuhanrudeMacBook-Pro:bitcoin liuhr$ src/bitcoin-cli -datadir="/Users/liuhr/data/blockdata/bitcoin/prod" -conf=$HOME/Library/Application\ Support/Bitcoin/bitcoin.conf listaccounts
+{
+  "": 0.00000000,
+  "futhark": 0.00000000,
+  "liuhr": 0.00000000
+}
+liuhanrudeMacBook-Pro:bitcoin liuhr$ src/bitcoin-cli -datadir="/Users/liuhr/data/blockdata/bitcoin/prod" -conf=$HOME/Library/Application\ Support/Bitcoin/bitcoin.conf getaccount 17DQKMA336SXNuLUckT8w8DbvWuVuzprZJ
+futhark

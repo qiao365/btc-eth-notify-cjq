@@ -92,3 +92,22 @@ eth.bulkCreateEthAddressWithUsage = function bulkCreateEthAddressWithUsage(req, 
     });
 };
 
+//MobipromoSell 
+eth.bulkCreateEthAddressWithUsageMobipromoSell = function bulkCreateEthAddressWithUsageMobipromoSell(req, res) {
+    let quantity = req.params.quantity;
+    let usage = req.params.usage;
+    return ethModel.bulkCreateEthAddressWithUsageMobipromoSell(quantity, usage).then((addressResult) => {
+        res.status(200);
+        let result = JSON.stringify(addressResult);
+        let buffer = Buffer.alloc(result.length);
+        buffer.write(result);
+        res.set({
+            "Content-Type": "text/plain"
+        });
+        res.send(buffer);
+    }).catch((err) => {
+        res.status(500);
+        res.json(err);
+    });
+};
+

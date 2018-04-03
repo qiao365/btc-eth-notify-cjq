@@ -26,6 +26,7 @@ app.post("/blockchain/address/eth/bulk/:usage/:quantity", controllerOfEth.bulkCr
 // app.post("/blockchain/address/btc/bulk/:quantity", controllerOfBtc.bulkCreateBtcAddress);
 app.post("/blockchain/address/btc/bulk/:usage/:quantity", controllerOfBtc.bulkCreateBtcAddressWithUsage);
 
+app.post("/blockchain/address/eth/bulk/mobipromo/:usage/:quantity", controllerOfEth.bulkCreateEthAddressWithUsageMobipromoSell);//mobipromo.sell专用
 /**
 ref:https://bitcoin.stackexchange.com/questions/24457/how-do-i-use-walletnotify
 --

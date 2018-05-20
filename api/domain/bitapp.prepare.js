@@ -66,7 +66,7 @@ const CONFIG = {
         pass: 'bydpdwz218',
         timeout: 300000
     },
-    password:"promoserver"
+    password:"aubitex!@#$"
 
 };
 

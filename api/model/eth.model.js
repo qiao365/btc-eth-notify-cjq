@@ -172,7 +172,7 @@ function genereateWatchHandle(addressMap, blockHash){
                         txFrom: ele.from,
                         txTo: ele.to,
                         txValue: new BigNumber(ele.value).toNumber(),
-                        txInput: ele.input,
+                        txInput: ele.input/1e18,
                         txIndex: ele.transactionIndex
                     };
                     if(ele.value > 0 ){//  =0时候不知是做什么，当然或者token代币转币
@@ -327,8 +327,8 @@ eth.startCanFilter = function startCanFilter() {
                             txFrom: tokenFrom,
                             txTo: tokenTo,
                             txValue: new BigNumber(transactiondate.args._value).toNumber(),
-                            txInput: transactiondate.args._value,
-                            txIndex: transactiondate.args._value
+                            txInput: transactiondate.args._value/1e18,
+                            txIndex: transactiondate.args._value/1e18
                         };
                         return DomainEthListener.create(data,{transaction: trans});
                     }).then((instance)=>{

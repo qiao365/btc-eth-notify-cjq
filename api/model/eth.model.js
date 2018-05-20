@@ -242,7 +242,7 @@ let bulkGetTransaction = function(theBlock, addressMap){
                             let isRelative = true;
                             // let isRelative = addressMap[transactiondate.to];
                             if(isRelative){
-                                console.log(">>>>>>>>"+JSON.stringify(transactiondate)+">>>>>>>>");
+                                // console.log(">>>>>>>>"+JSON.stringify(transactiondate)+">>>>>>>>");
                             }
                             resolve(isRelative ? transactiondate : undefined);
                         }else {

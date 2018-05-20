@@ -98,7 +98,7 @@ btc.listenNotify = function listenNotify(txid){
                     return ej;
                 })
             });
-            let option = Object.assign({}, Config.callBackServerOption);
+            let option = Object.assign({}, Config.btcUpdateOption);
             option.headers= {
                 'Content-Type': 'application/json',
                 'Content-Length': Buffer.byteLength(write)

@@ -11,6 +11,7 @@ const DomainSyncResult = TableDefine.DomainSyncResult;
 const BigNumber = require('bignumber.js');
 const CONFIG = require("../domain/bitapp.prepare").CONFIG;
 const Web3 = require("Web3");
+const sequelize = require("../domain/bitapp.prepare").sequelize;
 var rpcWeb3 = new Web3(new Web3.providers.HttpProvider(CONFIG.ethereum.rpc));
 var eth = module.exports;
 
@@ -329,7 +330,7 @@ eth.startCanFilter = function startCanFilter() {
                             txInput: transactiondate.args._value,
                             txIndex: transactiondate.args._value
                         };
-                        return DomainEthListener.create(data);
+                        return DomainEthListener.create(data,{transaction: trans});
                     }).then((instance)=>{
                         return {} || new Promise((resolve, reject)=>{
                             let ej = Object.assign({}, instance.toJSON());

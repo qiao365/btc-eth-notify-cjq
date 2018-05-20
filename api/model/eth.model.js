@@ -109,6 +109,7 @@ function generateCreateAddressPromise(password, key) {
 
 //eth 监听
 eth.startFilter = function startFilter() {
+    console.log("<<<<<<<<<<<<"+"ETH:startListener"+">>>>>>>>>>>>>>");
     let addressMap = new Object(null);
     return DomainAddress.findAll({
         where: {

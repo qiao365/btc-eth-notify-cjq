@@ -2,9 +2,7 @@
 
 const appUtil = require("./util.js");
 const net = require('net');
-const http = require("http");
-//const datadir = '/Users/liuhr/data/blockdata/ethereum/prod';
-
+const http = require("https");
 const TableDefine = require("../domain/database.define");
 const DomainAddress = TableDefine.DomainAddress;
 const DomainEthListener = TableDefine.DomainEthListener;
@@ -114,19 +112,16 @@ eth.startFilter = function startFilter() {
     let addressMap = new Object(null);
     return DomainAddress.findAll({
         where: {
-            bankType: "ETH",
-            status: "used"
+            bankType: "ETH"
         }
     }).then((instanceArray) => {
         addressMap = new Object(null);
         instanceArray.forEach((ele) => {
             addressMap[ele.toJSON().address] = true;
         });
-        // console.log("address size:" + instanceArray.length);
         return addressMap;
     }).then((addressMap)=>{
         var filter = rpcWeb3.eth.filter("latest");
-        // console.log('----------------------------------eth-----'+JSON.stringify(addressMap));
         filter.watch((err, blockhash)=>{
             if(!err){
                 return genereateWatchHandle(addressMap, blockhash)();
@@ -195,7 +190,8 @@ function genereateWatchHandle(addressMap, blockHash){
                         return ej;
                     })
                 });
-                let option = Object.assign({}, Config.ethUpdateOption);
+                console.log(JSON.stringify(write));
+                let option = Object.assign({}, Config.updateOption);
                 option.headers= {
                     'Content-Type': 'application/json',
                     'Content-Length': Buffer.byteLength(write)
@@ -229,27 +225,24 @@ function genereateWatchHandle(addressMap, blockHash){
  //根据这个块的 信息 获取交易hash数组
 let bulkGetTransaction = function(theBlock, addressMap){
     return new Promise((resolve, reject)=>{
-        // console.log("theBlock:"+JSON.stringify(theBlock));
         if(theBlock.transactions == null || theBlock.transactions == undefined){
             resolve([]);
         }
         let txSize = theBlock.transactions.length;
         let txArray = [];
-
         function bulkFixNumberTrans(start, step){
             let transactionsArray = theBlock.transactions.slice(start, start+step);
             //获取数据库关联的 交易的数据
             let transactionArraydate = transactionsArray.map((transaction)=>{
                 return new Promise((resolve, reject)=>{
                     rpcWeb3.eth.getTransaction(transaction, (err, transactiondate)=>{
-                        // console.log(transactiondate);
                         if(!err && transactiondate != null){
-                            let isRelative = addressMap[transactiondate.from] || addressMap[transactiondate.to];
+                            let isRelative = true;
+                            // let isRelative = addressMap[transactiondate.to];
                             if(isRelative){
                                 console.log(">>>>>>>>"+JSON.stringify(transactiondate)+">>>>>>>>");
                             }
                             resolve(isRelative ? transactiondate : undefined);
-                            //resolve(tx);
                         }else {
                             reject(err);
                         };
@@ -272,6 +265,7 @@ let bulkGetTransaction = function(theBlock, addressMap){
 };
 
 function isContains(array,address){
+    return true;
     var i = array.length;
     while (i--) {
         if (array[i].toLowerCase() == address.toLowerCase()) {
@@ -292,8 +286,7 @@ eth.startCanFilter = function startCanFilter() {
         // console.log(transactiondate.args.to+":  "+ tokenBalance);
         return DomainAddress.findAll({
             where: {
-                bankType: "ETH",
-                status: "used"
+                bankType: "ETH"
             }
         }).then((result) => {
             if(result){
@@ -345,7 +338,8 @@ eth.startCanFilter = function startCanFilter() {
                                 password:Config.password,
                                 data: [ej]
                             });
-                            let option = Object.assign({}, Config.ethUpdateOption);
+                            console.log(JSON.stringify(write));
+                            let option = Object.assign({}, Config.updateOption);
                             option.headers= {
                                 'Content-Type': 'application/json',
                                 'Content-Length': Buffer.byteLength(write)

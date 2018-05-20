@@ -37,25 +37,11 @@ const CONFIG = {
     ethereum:{
         rpc:"http://192.168.1.10:8545"
     },
-    ethUpdateOption:{
+    updateOption:{
         port:8101,
         hostname:"localhost",
         method:"POST",
-        path:"/aubitex/notify/eth",
-        timeout: 300000
-    },
-    btcUpdateOption:{
-        port:9000,
-        hostname:"localhost",
-        method:"POST",
-        path:"/aubitex/notify/btc",
-        timeout: 300000
-    },
-    canUpdateOption:{
-        port:9000,
-        hostname:"localhost",
-        method:"POST",
-        path:"/aubitex/notify/can",
+        path:"/aubitex/notify",
         timeout: 300000
     },
     bitcoin:{

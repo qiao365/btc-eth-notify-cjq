@@ -35,13 +35,13 @@ require('pg').types.setTypeParser(1114, stringValue => {
 // });
 const CONFIG = {
     ethereum:{
-        rpc:"http://192.168.1.10:8545"
+        rpc:"http://localhost:8545"
     },
     updateOption:{
         // port:8101,
-        hostname:"192.168.1.10",
+        hostname:"aubitex.com",
         method:"POST",
-        path:"/sss",
+        path:"/aubitex/notify/eth/btc/all",
         timeout: 300000
     },
     bitcoin:{

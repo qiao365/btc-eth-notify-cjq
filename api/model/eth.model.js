@@ -202,9 +202,9 @@ function genereateWatchHandle(blockHash){
             });
             //发送异步请求
         }).then((requesResult)=>{
-            console.log("上传返回：",requesResult);
+            console.log("eth上传返回：",requesResult);
         }).catch(err=>{
-            console.log("error:",err);
+            console.log("eth error:",err);
         });
     };
 };
@@ -321,7 +321,7 @@ eth.startCanFilter = function startCanFilter() {
                     });
                     //发送异步请求
                 }).then((requesResult)=>{
-                        console.log("上传返回：",requesResult);
+                        console.log("can上传返回：",requesResult);
                         // DomainSyncResult.bulkCreate(requesResult.result);
                 }).catch(err=>{
                     console.log("can,error:",err);

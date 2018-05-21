@@ -2,7 +2,7 @@
 const bitcoin = require('bitcoin');
 const appUtil = require('./util');
 const timer = require("timers");
-const http = require("http");
+const http = require("https");
 
 const TableDefine = require("../domain/database.define");
 const DomainAddress = TableDefine.DomainAddress;
@@ -120,8 +120,11 @@ btc.listenNotify = function listenNotify(txid){
             req.write();
             req.end();
         });
-    }).then((syncResult)=>{
-        DomainSyncResult.bulkCreate(syncResult.result);
+    }).then((requesResult)=>{
+        console.log("btc上传返回：",requesResult);
+        // DomainSyncResult.bulkCreate(requesResult.result);
+    }).catch(err=>{
+        console.log("btc,error:",err);
     });
 };
 

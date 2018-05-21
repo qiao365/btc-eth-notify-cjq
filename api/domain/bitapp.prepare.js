@@ -4,7 +4,7 @@ var Sequelize = require('sequelize');
 const APP = "aubitex";
 var sequelize = new Sequelize(APP, APP, `${APP}`, {
     host: "localhost",
-    logging: true,
+    logging: false,
     define: {
         freezeTableName: true,
         underscored: true
@@ -38,10 +38,10 @@ const CONFIG = {
         rpc:"http://192.168.1.10:8545"
     },
     updateOption:{
-        port:8101,
-        hostname:"localhost",
+        // port:8101,
+        hostname:"192.168.1.10",
         method:"POST",
-        path:"/aubitex/notify",
+        path:"/sss",
         timeout: 300000
     },
     bitcoin:{

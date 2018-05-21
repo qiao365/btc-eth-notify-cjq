@@ -35,7 +35,7 @@ require('pg').types.setTypeParser(1114, stringValue => {
 // });
 const CONFIG = {
     ethereum:{
-        rpc:"http://localhost:8545"
+        rpc:"http://192.168.1.10:8545"
     },
     updateOption:{
         // port:8101,

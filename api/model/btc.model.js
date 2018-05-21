@@ -72,6 +72,9 @@ btc.listenNotify = function listenNotify(txid){
     }).then((tx)=>{
         let txDataSave = tx.details.map((ele)=>{
             // tx doest not have blockHeight
+            if(ele.category == 'send'){
+                return undefined;
+            }
             return {
                 address: ele.address,
                 bankType: 'BTC',
@@ -86,7 +89,8 @@ btc.listenNotify = function listenNotify(txid){
                 txDate: new Date(tx.timereceived * 1000)
             };
         });
-        return DomainBtcListener.bulkCreate(txDataSave);
+        let txDataSaveDb = txDataSave.filter((ele)=> ele);
+        return DomainBtcListener.bulkCreate(txDataSaveDb);
     }).then((listenInstance)=>{
         return new Promise((resolve, reject)=>{
             let write = JSON.stringify({

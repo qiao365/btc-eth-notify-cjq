@@ -46,6 +46,8 @@ const CONFIG = {
     },
     bitcoin:{
         protocol: 'http',
+        // port: 9091,
+        // host: '192.168.1.168',
         port: 8332,
         host: '192.168.1.10',
         user: 'somenew',

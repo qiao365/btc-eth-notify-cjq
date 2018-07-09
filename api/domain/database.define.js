@@ -66,6 +66,35 @@ model.DomainAddressMobipromoSell = sequelize.define("t_address_mobipromosell",{
     }
 });
 
+//刘总 100 address 专用
+model.DomainAddressOther = sequelize.define("t_address_other",{
+    address:{
+        type: Sequelize.STRING,
+        unique: true
+    },
+    bankType:{
+        type:Sequelize.STRING
+    },
+    status:{
+        type:Sequelize.STRING
+    },
+    createdAt: {
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW,
+        field: "created_at"
+    },
+    updatedAt: {
+        type: Sequelize.DATE,
+        field: "updated_at"
+    },
+    usage:{
+        type:Sequelize.STRING
+    },
+    password:{
+        type:Sequelize.STRING
+    }
+});
+
 model.DomainEthListener = sequelize.define("t_listener_eth",{
     address:{
         type: Sequelize.STRING

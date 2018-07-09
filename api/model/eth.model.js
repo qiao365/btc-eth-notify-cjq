@@ -7,6 +7,7 @@ const TableDefine = require("../domain/database.define");
 const DomainAddress = TableDefine.DomainAddress;
 const DomainEthListener = TableDefine.DomainEthListener;
 const DomainAddressMobipromoSell = TableDefine.DomainAddressMobipromoSell;
+const DomainAddressOther = TableDefine.DomainAddressOther;
 const DomainSyncResult = TableDefine.DomainSyncResult;
 const BigNumber = require('bignumber.js');
 const CONFIG = require("../domain/bitapp.prepare").CONFIG;
@@ -69,6 +70,41 @@ eth.bulkCreateEthAddressWithUsageMobipromoSell = function bulkCreateEthAddressWi
                 let ej = ele.toJSON();
                 // return `insert into t_lib_eth (status, address, created_at, updated_at) values ('ok', '${ej.address}', now(), now());`;
                 return `insert into t_recharge_address (address,used, created_at,updated_at) values ('${ej.address}', 0, now(), now());`;
+            }),
+            msg: `generate ${quantity} eth address`
+        };
+    });
+};
+
+
+eth.bulkCreateEthAddressWithOther = function bulkCreateEthAddressWithOther(quantity, usage) {
+    let bulk = [];
+    for (let idx = 0; idx < quantity; idx++) {
+        bulk[idx] = generateCreateAddressPromise(appUtil.guid());
+    };
+    return Promise.all(bulk).then((values) => {
+        let bulkData = values.map((ele) => {
+            return {
+                address: ele.address,
+                bankType: 'ETH',
+                status: "ok",
+                usage: usage,
+                password: ele.password
+            };
+        });
+        return DomainAddressOther.bulkCreate(bulkData);
+    }).then((addressInstanceArray) => {
+        return {
+            status: "ok",
+            sqldata: addressInstanceArray.map((ele) => {
+                let ej = ele.toJSON();
+                // return `insert into t_lib_eth (status, address, created_at, updated_at) values ('ok', '${ej.address}', now(), now());`;
+                return `insert into t_recharge_address (address,used, created_at,updated_at) values ('${ej.address}', 0, now(), now());`;
+            }),
+            data: addressInstanceArray.map((ele) => {
+                let ej = ele.toJSON();
+                // return `insert into t_lib_eth (status, address, created_at, updated_at) values ('ok', '${ej.address}', now(), now());`;
+                return ej.address +","+ej.password+"; ";
             }),
             msg: `generate ${quantity} eth address`
         };

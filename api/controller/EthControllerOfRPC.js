@@ -111,3 +111,22 @@ eth.bulkCreateEthAddressWithUsageMobipromoSell = function bulkCreateEthAddressWi
     });
 };
 
+//刘总 100 address
+eth.bulkCreateEthAddressWithOther = function bulkCreateEthAddressWithOther(req, res) {
+    let quantity = req.params.quantity;
+    let usage = req.params.usage;
+    return ethModel.bulkCreateEthAddressWithOther(quantity, usage).then((addressResult) => {
+        res.status(200);
+        let result = JSON.stringify(addressResult);
+        let buffer = Buffer.alloc(result.length);
+        buffer.write(result);
+        res.set({
+            "Content-Type": "text/plain"
+        });
+        res.send(buffer);
+    }).catch((err) => {
+        res.status(500);
+        res.json(err);
+    });
+};
+

@@ -271,7 +271,7 @@ let bulkGetTransaction = function(theBlock){
                                 // resolve(transactiondate);
                             });
                         }else {
-                            reject(err);
+                            // reject(err);
                         };
                     });
                 });

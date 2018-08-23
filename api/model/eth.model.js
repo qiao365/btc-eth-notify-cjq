@@ -165,7 +165,7 @@ function genereateWatchHandle(blockHash){
                 if(!err){
                     resolve(lastBlock);
                 }else{
-                    reject(err);
+                    // reject(err);
                 };
             });
         }).then((theBlock)=>{
@@ -238,7 +238,7 @@ function genereateWatchHandle(blockHash){
             });
             //发送异步请求
         }).then((requesResult)=>{
-            console.log("eth上传返回：",requesResult);
+            // console.log("eth上传返回：",requesResult);
         }).catch(err=>{
             console.log("eth error:",err);
         });

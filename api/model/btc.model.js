@@ -7,7 +7,6 @@ const http = require("https");
 const TableDefine = require("../domain/database.define");
 const DomainAddress = TableDefine.DomainAddress;
 const DomainBtcListener = TableDefine.DomainBtcListener;
-const DomainSyncResult = TableDefine.DomainSyncResult;
 const CONFIG = require("../domain/bitapp.prepare").CONFIG;
 var client = new bitcoin.Client(CONFIG.bitcoin);
 

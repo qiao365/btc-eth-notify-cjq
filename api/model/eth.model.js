@@ -151,7 +151,7 @@ eth.startFilter = function startFilter() {
         if(!err){
             return genereateWatchHandle(blockhash)();
         }else{
-            throw err;
+           return console.log('eth监听','stop',err);
         };
     });
 };
@@ -299,7 +299,9 @@ eth.startCanFilter = function startCanFilter() {
     console.log("<<<<<<<<<<<<"+"Can:startListener"+">>>>>>>>>>>>>>");
     var someone = myContractInstance.Transfer();
     someone.watch(function(error, transactiondate){
-        // console.log(transactiondate.args.to+":  "+ tokenBalance);
+        if(error){
+            return console.log('can监听，stop ！',error);
+        }
         return DomainAddress.findOne({
             where: {
                 bankType: "ETH",

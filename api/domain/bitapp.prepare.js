@@ -46,12 +46,18 @@ const CONFIG = {
     },
     bitcoin:{
         protocol: 'http',
-        // port: 9091,
-        // host: '192.168.1.168',
         port: 8332,
-        host: '192.168.1.10',
+        host: '192.168.1.25',
         user: 'somenew',
         pass: 'bydpdwz218',
+        timeout: 300000
+    },
+    omni:{
+        protocol: 'http',
+        port: 9091,
+        host: '192.168.1.25',
+        user: 'ylkj123',
+        pass: 'ylkj123',
         timeout: 300000
     },
     password:"aubitex!@#$"

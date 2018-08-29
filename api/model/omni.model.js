@@ -7,7 +7,7 @@ const DomainAddress = TableDefine.DomainAddress;
 const DomainOmniModelListener = TableDefine.DomainOmniModelListener;
 const CONFIG = require("../domain/bitapp.prepare").CONFIG;
 const Omni = require("../utils/OmniClient").Omni;
-Omni.init(CONFIG.omni.user, CONFIG.omni.user.password, CONFIG.omni.host, CONFIG.omni.port);
+Omni.init(CONFIG.omni.user, CONFIG.omni.pass, CONFIG.omni.host, CONFIG.omni.port);
 
 var OmniModel = module.exports;
 
@@ -40,12 +40,12 @@ OmniModel.bulkCreateOmniModelAddress = function bulkCreateOmniModelAddress(quant
     });
 };
 
-function generateNewAddressPromise(account, key) {
+function generateNewAddressPromise(account) {
     return new Promise((resolve, reject) => {
         Omni.getnewaddress(account, function(newAddress){
             resolve({
                 address: newAddress,
-                password:password
+                password:account
             });
         });
     });

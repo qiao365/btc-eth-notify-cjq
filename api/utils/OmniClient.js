@@ -236,11 +236,12 @@ Omni.getaccountaddress = function (account, cb) {
     }
 }
 
-Omni.getaddressesbyaccount = function (cb) {
-    client.cmd('getaddressesbyaccount', function (err, addresses, resHeaders) {
-        if (err) return console.log(err)
-        console.log(addresses)
-        return cb(data)
+//""代表--获取全部地址
+Omni.getaddressesbyaccount = function(account,cb){
+    client.cmd('getaddressesbyaccount',account,function(err,addresses,resHeaders){
+      if (err) return console.log(err)
+  console.log(addresses)
+  return cb(data)
     })
 }
 

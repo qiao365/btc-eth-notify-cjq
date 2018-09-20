@@ -71,66 +71,68 @@ OmniModel.listenNotify = function listenNotify(txid){
 //     "block": 500999,
 //     "confirmations": 4156
 //   }
-    Omni.gettransaction(txid, function(data){
-        console.log("data",JSON.stringify(data));
-        // if(data.block > 0 && data.propertyid > 0 && data.amount > 0 && data.propertyid == 31){
-        if(data.block > 0 && data.propertyid > 0 && data.amount > 0){//TEST
-            let save = {
-                address: data.sendingaddress,
-                bankType: 'USDT',
-                txHash: txid,
-                propertyId:data.propertyid,
-                blockHash: data.blockHash,
-                blockNumber: data.block,
-                txFrom: data.sendingaddress,
-                txTo: data.referenceaddress,
-                txValue: data.amount * 1e10,
-                txInput: data.amount,
-                txIndex: data.blockhash,
-                txDate: new Date(data.blocktime * 1000)
-            };
-            return DomainOmniListener.create(save).then((listenInstance)=>{
-                console.log("listenInstance",listenInstance);
-                return new Promise((resolve, reject)=>{
-                    listenInstance.txHuman = ej.txValue / 1e10;
-                    let write = JSON.stringify({
-                        bankType: "USDT",
-                        password: Config.password,
-                        data: [listenInstance]
-                    });
-                    console.log('omin上传：',JSON.stringify(write));
-                    let option = Object.assign({}, Config.updateOption);
-                    option.headers= {
-                        'Content-Type': 'application/json',
-                        'Content-Length': Buffer.byteLength(write)
-                    };
-                    let req = http.request(option, (res) => {
-                        let data = '';
-                        res.setEncoding("utf8");
-                        res.on("data", (chunk) => {
-                            data += chunk;
+return new Promise((resolve, reject)=>{
+        Omni.gettransaction(txid, function(data){
+            console.log("data",JSON.stringify(data));
+            // if(data.block > 0 && data.propertyid > 0 && data.amount > 0 && data.propertyid == 31){
+            if(data.block > 0 && data.propertyid > 0 && data.amount > 0){//TEST
+                let save = {
+                    address: data.sendingaddress,
+                    bankType: 'USDT',
+                    txHash: txid,
+                    propertyId:data.propertyid,
+                    blockHash: data.blockHash,
+                    blockNumber: data.block,
+                    txFrom: data.sendingaddress,
+                    txTo: data.referenceaddress,
+                    txValue: data.amount * 1e10,
+                    txInput: data.amount,
+                    txIndex: data.blockhash,
+                    txDate: new Date(data.blocktime * 1000)
+                };
+                return DomainOmniListener.create(save).then((listenInstance)=>{
+                    console.log("listenInstance",listenInstance);
+                    return new Promise((resolve, reject)=>{
+                        listenInstance.txHuman = ej.txValue / 1e10;
+                        let write = JSON.stringify({
+                            bankType: "USDT",
+                            password: Config.password,
+                            data: [listenInstance]
                         });
-                        res.on("end", () => {
-                            resolve(data);
+                        console.log('omin上传：',JSON.stringify(write));
+                        let option = Object.assign({}, Config.updateOption);
+                        option.headers= {
+                            'Content-Type': 'application/json',
+                            'Content-Length': Buffer.byteLength(write)
+                        };
+                        let req = http.request(option, (res) => {
+                            let data = '';
+                            res.setEncoding("utf8");
+                            res.on("data", (chunk) => {
+                                data += chunk;
+                            });
+                            res.on("end", () => {
+                                resolve(data);
+                            });
                         });
+                        req.on('error', (e) => {
+                            reject(e);
+                        });
+                        req.write();
+                        req.end();
                     });
-                    req.on('error', (e) => {
-                        reject(e);
-                    });
-                    req.write();
-                    req.end();
+                }).then((requesResult)=>{
+                    console.log("omin上传返回：",requesResult);
+                    resolve(requesResult);
+                }).catch(err=>{
+                    console.log("omin,error:",err);
+                    resolve("error");
                 });
-            }).then((requesResult)=>{
-                console.log("omin上传返回：",requesResult);
-                return requesResult;
-            }).catch(err=>{
-                console.log("omin,error:",err);
-                return Promise.resolve("error");
-            });
-        }else{
-            console.log("omin接收到其他币种", JSON.stringify(data));
-            return Promise.resolve("接收到其他币种");
-        }
+            }else{
+                console.log("omin接收到其他币种", JSON.stringify(data));
+                resolve("接收到其他币种");
+            }
+        });
     });
 };
 

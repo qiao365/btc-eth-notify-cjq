@@ -7,8 +7,8 @@ const http = require("https");
 const TableDefine = require("../domain/database.define");
 const DomainAddress = TableDefine.DomainAddress;
 const DomainBtcListener = TableDefine.DomainBtcListener;
-const CONFIG = require("../domain/bitapp.prepare").CONFIG;
-var client = new bitcoin.Client(CONFIG.bitcoin);
+const Config = require("../domain/bitapp.prepare").CONFIG;
+var client = new bitcoin.Client(Config.bitcoin);
 
 var btc = module.exports;
 

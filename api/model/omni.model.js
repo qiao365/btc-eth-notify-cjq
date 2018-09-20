@@ -90,7 +90,7 @@ return new Promise((resolve, reject)=>{
                     txDate: new Date(data.blocktime * 1000)
                 };
                 return DomainOmniListener.create(save).then((listenInstance)=>{
-                    console.log("listenInstance",listenInstance);
+                    // console.log("listenInstance",listenInstance);
                     return new Promise((resolve, reject)=>{
                         listenInstance.txHuman = listenInstance.txValue / 1e10;
                         let write = JSON.stringify({

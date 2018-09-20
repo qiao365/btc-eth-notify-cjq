@@ -71,8 +71,11 @@ OmniModel.listenNotify = function listenNotify(txid){
 //     "block": 500999,
 //     "confirmations": 4156
 //   }
+    console.log(txid);
     Omni.gettransaction(txid, function(data){
-        if(data.block > 0 && data.propertyid > 0 && data.amount > 0 && data.propertyid == 31){
+        console.log("data",JSON.stringify(data));
+        // if(data.block > 0 && data.propertyid > 0 && data.amount > 0 && data.propertyid == 31){
+        if(data.block > 0 && data.propertyid > 0 && data.amount > 0){//TEST
             let save = {
                 address: data.sendingaddress,
                 bankType: 'USDT',
@@ -87,6 +90,7 @@ OmniModel.listenNotify = function listenNotify(txid){
                 txDate: new Date(data.blocktime * 1000)
             };
             return DomainOmniModelListener.create(save).then((listenInstance)=>{
+                console.log("listenInstance",listenInstance);
                 return new Promise((resolve, reject)=>{
                     listenInstance.txHuman = ej.txValue / 1e10;
                     let write = JSON.stringify({
@@ -120,6 +124,7 @@ OmniModel.listenNotify = function listenNotify(txid){
                 console.log("usdt上传返回：",requesResult);
                 return requesResult;
             }).catch(err=>{
+                console.log("err:",err);
                 return("error");
                 console.log("usdt,error:",err);
             });

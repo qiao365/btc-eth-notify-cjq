@@ -75,7 +75,7 @@ return new Promise((resolve, reject)=>{
         Omni.gettransaction(txid, function(data){
             console.log("data",JSON.stringify(data));
             // if(data.block > 0 && data.propertyid > 0 && data.amount > 0 && data.propertyid == 31){
-            if(data.block > 0 && data.propertyid > 0 && data.amount > 0){//TEST
+            if(data.block > 0 && data.propertyid > 0 && data.amount > 0){// for test
                 let save = {
                     address: data.sendingaddress,
                     bankType: 'USDT',
@@ -87,7 +87,6 @@ return new Promise((resolve, reject)=>{
                     txTo: data.referenceaddress,
                     txValue: data.amount * 1e10,
                     txInput: data.amount,
-                    txIndex: data.blockhash,
                     txDate: new Date(data.blocktime * 1000)
                 };
                 return DomainOmniListener.create(save).then((listenInstance)=>{

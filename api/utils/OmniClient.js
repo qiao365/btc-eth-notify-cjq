@@ -350,7 +350,6 @@ Omni.decoderawtransaction = function (rawtx, cb) {
 Omni.getomnibalance = function (addr, propertyid, cb) {
     client.cmd("omni_getbalance", addr, propertyid, function (err, data, resHeaders) {
         if (err) return console.log(err);
-
         return cb(data)
     })
 }
@@ -358,7 +357,6 @@ Omni.getomnibalance = function (addr, propertyid, cb) {
 Omni.getallbalancesforaddress = function (addr, cb) {
     client.cmd("omni_getallbalancesforaddress", addr, function (err, data, resHeaders) {
         if (err) return console.log(err);
-
         return cb(data)
     })
 }

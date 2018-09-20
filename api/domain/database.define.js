@@ -113,7 +113,8 @@ model.DomainEthListener = sequelize.define("t_listener_eth",{
     },
     txHash:{
         type:Sequelize.STRING,
-        field:"tx_hash"
+        field:"tx_hash",
+        unique: true
     },
     contractAddress:{
         type:Sequelize.STRING,
@@ -177,7 +178,8 @@ model.DomainBtcListener = sequelize.define("t_listener_btc",{
     },
     txHash:{
         type:Sequelize.STRING,
-        field:"tx_hash"
+        field:"tx_hash",
+        unique: true
     },
     blockHash:{
         type:Sequelize.STRING,
@@ -242,7 +244,8 @@ model.DomainOmniListener = sequelize.define("t_listener_omni",{
     },
     txHash:{
         type:Sequelize.STRING,
-        field:"tx_hash"
+        field:"tx_hash",
+        unique: true
     },
     blockHash:{
         type:Sequelize.STRING,

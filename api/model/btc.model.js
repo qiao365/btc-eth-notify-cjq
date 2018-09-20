@@ -126,8 +126,10 @@ btc.listenNotify = function listenNotify(txid){
     }).then((requesResult)=>{
         console.log("btc上传返回：",requesResult);
         // DomainSyncResult.bulkCreate(requesResult.result);
+        return requesResult;
     }).catch(err=>{
         console.log("btc,error:",err);
+        return {"errpr":err};
     });
 };
 

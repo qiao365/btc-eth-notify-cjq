@@ -92,7 +92,7 @@ return new Promise((resolve, reject)=>{
                 return DomainOmniListener.create(save).then((listenInstance)=>{
                     console.log("listenInstance",listenInstance);
                     return new Promise((resolve, reject)=>{
-                        listenInstance.txHuman = ej.txValue / 1e10;
+                        listenInstance.txHuman = listenInstance.txValue / 1e10;
                         let write = JSON.stringify({
                             bankType: "USDT",
                             password: Config.password,

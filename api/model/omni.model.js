@@ -74,8 +74,8 @@ OmniModel.listenNotify = function listenNotify(txid){
 return new Promise((resolve, reject)=>{
         Omni.gettransaction(txid, function(data){
             console.log("data",JSON.stringify(data));
-            // if(data.block > 0 && data.propertyid > 0 && data.amount > 0 && data.propertyid == 31){
-            if(data.block > 0 && data.propertyid > 0 && data.amount > 0){// for test
+            if(data.block > 0 && data.propertyid > 0 && data.amount > 0 && data.propertyid == 31){
+            // if(data.block > 0 && data.propertyid > 0 && data.amount > 0){// for test
                 let save = {
                     address: data.sendingaddress,
                     bankType: 'USDT',

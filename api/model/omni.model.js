@@ -98,7 +98,7 @@ return new Promise((resolve, reject)=>{
                             password: Config.password,
                             data: [listenInstance]
                         });
-                        console.log('omin上传：',JSON.stringify(write));
+                        console.log('omin上传：',write);
                         let option = Object.assign({}, Config.updateOption);
                         option.headers= {
                             'Content-Type': 'application/json',
@@ -117,7 +117,7 @@ return new Promise((resolve, reject)=>{
                         req.on('error', (e) => {
                             reject(e);
                         });
-                        req.write();
+                        req.write(write);
                         req.end();
                     });
                 }).then((requesResult)=>{

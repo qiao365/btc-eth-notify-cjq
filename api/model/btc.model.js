@@ -101,7 +101,7 @@ btc.listenNotify = function listenNotify(txid){
                     return ej;
                 })
             });
-            console.log(JSON.stringify(write));
+            console.log('btc上传：',write);
             let option = Object.assign({}, Config.updateOption);
             option.headers= {
                 'Content-Type': 'application/json',
@@ -120,7 +120,7 @@ btc.listenNotify = function listenNotify(txid){
             req.on('error', (e) => {
                 reject(e);
             });
-            req.write();
+            req.write(write);
             req.end();
         });
     }).then((requesResult)=>{

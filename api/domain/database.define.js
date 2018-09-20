@@ -219,6 +219,65 @@ model.DomainBtcListener = sequelize.define("t_listener_btc",{
         }
     ]
 });
+
+model.DomainOmniListener = sequelize.define("t_listener_omni",{
+    address:{
+        type: Sequelize.STRING
+    },
+    bankType:{
+        type:Sequelize.STRING
+    },
+    createdAt: {
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW,
+        field: "created_at"
+    },
+    updatedAt: {
+        type: Sequelize.DATE,
+        field: "updated_at"
+    },
+    propertyId:{
+        type:Sequelize.STRING,
+        field:"propertyid"
+    },
+    txHash:{
+        type:Sequelize.STRING,
+        field:"tx_hash"
+    },
+    blockHash:{
+        type:Sequelize.STRING,
+        field:"tx_block_hash"
+    },
+    blockNumber:{
+        type:Sequelize.BIGINT,
+        field:"tx_block_number"
+    },
+    txFrom:{
+        type:Sequelize.STRING,
+        field:"tx_from"
+    },
+    txTo:{
+        type:Sequelize.STRING,
+        field:"tx_to"
+    },
+    txValue:{
+        type:Sequelize.DECIMAL(40,8),
+        field:"tx_value"
+    },
+    txInput:{
+        type:Sequelize.STRING,
+        field:"tx_input"
+    },
+    txIndex:{
+        type:Sequelize.INTEGER,
+        field:"tx_index"
+    },
+    txDate:{
+        type: Sequelize.DATE,
+        field: "tx_at"
+    }    
+});
+
 model.DomainSyncResult = sequelize.define("t_sync_result",{
     txHash:{
         type:Sequelize.STRING,

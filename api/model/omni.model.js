@@ -4,7 +4,7 @@ const http = require("https");
 
 const TableDefine = require("../domain/database.define");
 const DomainAddress = TableDefine.DomainAddress;
-const DomainOmniModelListener = TableDefine.DomainOmniModelListener;
+const DomainOmniListener = TableDefine.DomainOmniListener;
 const CONFIG = require("../domain/bitapp.prepare").CONFIG;
 const Omni = require("../utils/OmniClient").Omni;
 Omni.init(CONFIG.omni.user, CONFIG.omni.pass, CONFIG.omni.host, CONFIG.omni.port);
@@ -71,7 +71,6 @@ OmniModel.listenNotify = function listenNotify(txid){
 //     "block": 500999,
 //     "confirmations": 4156
 //   }
-    console.log(txid);
     Omni.gettransaction(txid, function(data){
         console.log("data",JSON.stringify(data));
         // if(data.block > 0 && data.propertyid > 0 && data.amount > 0 && data.propertyid == 31){
@@ -80,6 +79,7 @@ OmniModel.listenNotify = function listenNotify(txid){
                 address: data.sendingaddress,
                 bankType: 'USDT',
                 txHash: txid,
+                propertyId:data.propertyid,
                 blockHash: data.blockHash,
                 blockNumber: data.block,
                 txFrom: data.sendingaddress,
@@ -89,7 +89,7 @@ OmniModel.listenNotify = function listenNotify(txid){
                 txIndex: data.blockhash,
                 txDate: new Date(data.blocktime * 1000)
             };
-            return DomainOmniModelListener.create(save).then((listenInstance)=>{
+            return DomainOmniListener.create(save).then((listenInstance)=>{
                 console.log("listenInstance",listenInstance);
                 return new Promise((resolve, reject)=>{
                     listenInstance.txHuman = ej.txValue / 1e10;
@@ -98,7 +98,7 @@ OmniModel.listenNotify = function listenNotify(txid){
                         password: Config.password,
                         data: [listenInstance]
                     });
-                    console.log('usdt上传：',JSON.stringify(write));
+                    console.log('omin上传：',JSON.stringify(write));
                     let option = Object.assign({}, Config.updateOption);
                     option.headers= {
                         'Content-Type': 'application/json',
@@ -121,15 +121,15 @@ OmniModel.listenNotify = function listenNotify(txid){
                     req.end();
                 });
             }).then((requesResult)=>{
-                console.log("usdt上传返回：",requesResult);
+                console.log("omin上传返回：",requesResult);
                 return requesResult;
             }).catch(err=>{
-                console.log("err:",err);
-                return("error");
-                console.log("usdt,error:",err);
+                console.log("omin,error:",err);
+                return Promise.resolve("error");
             });
         }else{
-            console.log("接收到其他币种", JSON.stringify(data));
+            console.log("omin接收到其他币种", JSON.stringify(data));
+            return Promise.resolve("接收到其他币种");
         }
     });
 };

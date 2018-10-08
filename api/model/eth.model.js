@@ -36,12 +36,14 @@ eth.bulkCreateEthAddress = function bulkCreateEthAddress(quantity, usage) {
     }).then((addressInstanceArray) => {
         return {
             status: "ok",
-            sqldata: addressInstanceArray.map((ele) => {
-                let ej = ele.toJSON();
-                // return `insert into t_lib_eth (status, address, created_at, updated_at) values ('ok', '${ej.address}', now(), now());`;
-                return `insert into pool_addresses (address, created_at, updated_at,currency,used) values ('${ej.address}', now(), now(),3,0);`;
-            }),
-            msg: `generate ${quantity} eth address`
+            addressInstanceArray:addressInstanceArray,
+            // sqldata: addressInstanceArray.map((ele) => {
+            //     let ej = ele.toJSON();
+            //     // return `insert into t_lib_eth (status, address, created_at, updated_at) values ('ok', '${ej.address}', now(), now());`;
+            //     return `insert into pool_addresses (address, created_at, updated_at,currency,used) values ('${ej.address}', now(), now(),3,0);`;
+            // }),s
+            msg: `generate ${quantity} eth address`,
+            quantity:quantity
         };
     });
 };
@@ -66,12 +68,14 @@ eth.bulkCreateEthAddressWithUsageMobipromoSell = function bulkCreateEthAddressWi
     }).then((addressInstanceArray) => {
         return {
             status: "ok",
-            sqldata: addressInstanceArray.map((ele) => {
-                let ej = ele.toJSON();
-                // return `insert into t_lib_eth (status, address, created_at, updated_at) values ('ok', '${ej.address}', now(), now());`;
-                return `insert into t_recharge_address (address,used, created_at,updated_at) values ('${ej.address}', 0, now(), now());`;
-            }),
-            msg: `generate ${quantity} eth address`
+            addressInstanceArray:addressInstanceArray,
+            // sqldata: addressInstanceArray.map((ele) => {
+            //     let ej = ele.toJSON();
+            //     // return `insert into t_lib_eth (status, address, created_at, updated_at) values ('ok', '${ej.address}', now(), now());`;
+            //     return `insert into t_recharge_address (address,used, created_at,updated_at) values ('${ej.address}', 0, now(), now());`;
+            // }),
+            msg: `generate ${quantity} eth address`,
+            quantity:quantity
         };
     });
 };
@@ -96,17 +100,19 @@ eth.bulkCreateEthAddressWithOther = function bulkCreateEthAddressWithOther(quant
     }).then((addressInstanceArray) => {
         return {
             status: "ok",
-            sqldata: addressInstanceArray.map((ele) => {
-                let ej = ele.toJSON();
-                // return `insert into t_lib_eth (status, address, created_at, updated_at) values ('ok', '${ej.address}', now(), now());`;
-                return `insert into t_recharge_address (address,used, created_at,updated_at) values ('${ej.address}', 0, now(), now());`;
-            }),
-            data: addressInstanceArray.map((ele) => {
-                let ej = ele.toJSON();
-                // return `insert into t_lib_eth (status, address, created_at, updated_at) values ('ok', '${ej.address}', now(), now());`;
-                return ej.address +","+ej.password+"; ";
-            }),
-            msg: `generate ${quantity} eth address`
+            addressInstanceArray:addressInstanceArray,
+            // sqldata: addressInstanceArray.map((ele) => {
+            //     let ej = ele.toJSON();
+            //     // return `insert into t_lib_eth (status, address, created_at, updated_at) values ('ok', '${ej.address}', now(), now());`;
+            //     return `insert into t_recharge_address (address,used, created_at,updated_at) values ('${ej.address}', 0, now(), now());`;
+            // }),
+            // data: addressInstanceArray.map((ele) => {
+            //     let ej = ele.toJSON();
+            //     // return `insert into t_lib_eth (status, address, created_at, updated_at) values ('ok', '${ej.address}', now(), now());`;
+            //     return ej.address +","+ej.password+"; ";
+            // }),
+            msg: `generate ${quantity} eth address`,
+            quantity:quantity
         };
     });
 };

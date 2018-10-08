@@ -30,12 +30,14 @@ OmniModel.bulkCreateOmniModelAddress = function bulkCreateOmniModelAddress(quant
     }).then((addressInstanceArray) => {
         return {
             status: "ok",
-            sqldata: addressInstanceArray.map((ele) => {
-                let ej = ele.toJSON();
-                return `insert into pool_addresses (address, created_at, updated_at,currency,used) values ('${ej.address}', now(), now(),3,0);`;
+            addressInstanceArray:addressInstanceArray,
+            // sqldata: addressInstanceArray.map((ele) => {
+            //     let ej = ele.toJSON();
+            //     return `insert into pool_addresses (address, created_at, updated_at,currency,used) values ('${ej.address}', now(), now(),3,0);`;
 
-            }),
-            msg: `generate ${quantity} eth address`
+            // }),
+            msg: `generate ${quantity} eth address`,
+            quantity:quantity
         };
     });
 };

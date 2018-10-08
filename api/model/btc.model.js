@@ -32,13 +32,15 @@ btc.bulkCreateBtcAddress = function bulkCreateBtcAddress(quantity, usage) {
     }).then((addressInstanceArray) => {
         return {
             status: "ok",
-            sqldata: addressInstanceArray.map((ele) => {
-                let ej = ele.toJSON();
-                // return `insert into t_lib_btc (status, address, created_at, updated_at) values ('ok', '${ej.address}', now(), now());`;
-                return `insert into pool_addresses (address, created_at, updated_at,currency,used) values ('${ej.address}', now(), now(),2,0);`;
+            addressInstanceArray:addressInstanceArray,
+            // sqldata: addressInstanceArray.map((ele) => {
+            //     let ej = ele.toJSON();
+            //     // return `insert into t_lib_btc (status, address, created_at, updated_at) values ('ok', '${ej.address}', now(), now());`;
+            //     return `insert into pool_addresses (address, created_at, updated_at,currency,used) values ('${ej.address}', now(), now(),2,0);`;
 
-            }),
-            msg: `generate ${quantity} eth address`
+            // }),
+            msg: `generate ${quantity} eth address`,
+            quantity:quantity
         };
     });
 };

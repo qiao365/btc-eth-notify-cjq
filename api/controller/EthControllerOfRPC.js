@@ -77,6 +77,12 @@ eth.bulkCreateEthAddress = function bulkCreateEthAddress(req, res) {
 eth.bulkCreateEthAddressWithUsage = function bulkCreateEthAddressWithUsage(req, res) {
     let quantity = req.params.quantity;
     let usage = req.params.usage;
+    let password = req.body.password;
+    if(!password || password != 'ethGYQ@$=+'){
+        res.status(401);
+        res.json({error:401});
+        return;
+    }
     return ethModel.bulkCreateEthAddress(quantity, usage).then((addressResult) => {
         res.status(200);
         let result = JSON.stringify(addressResult);

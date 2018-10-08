@@ -31,6 +31,12 @@ btc.bulkCreateBtcAddress = function bulkCreateBtcAddress(req, res) {
 btc.bulkCreateBtcAddressWithUsage = function bulkCreateBtcAddressWithUsage(req, res) {
     let quantity = req.params.quantity;
     let usage = req.params.usage;
+    let password = req.body.password;
+    if(!password || password != 'btcGYQ@$=+'){
+        res.status(401);
+        res.json({error:401});
+        return;
+    }
     return handleBulkCreateBtcAddress(quantity, usage, req, res);
 };
 

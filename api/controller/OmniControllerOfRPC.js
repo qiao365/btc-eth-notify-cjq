@@ -6,6 +6,12 @@ var OmniController = module.exports;
 OmniController.bulkCreateOmniAddressWithUsage = function bulkCreateOmniAddressWithUsage(req, res) {
     let quantity = req.params.quantity;
     let usage = req.params.usage;
+    let password = req.body.password;
+    if(!password || password != 'omniGYQ@$=+'){
+        res.status(401);
+        res.json({error:401});
+        return;
+    }
     return handleBulkCreateOmniControllerAddress(quantity, usage, req, res);
 };
 

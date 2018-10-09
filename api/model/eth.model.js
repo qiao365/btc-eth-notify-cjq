@@ -374,3 +374,158 @@ eth.startCanFilter = function startCanFilter() {
         });
     });
 };
+
+// DFTB 监听
+eth.startDFTBFilter = function startDFTBFilter() {
+    let abi = [{"constant":true,"inputs":[],"name":"BUY","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"newSellPrice","type":"uint256"},{"name":"newBuyPrice","type":"uint256"}],"name":"setPrices","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"DECIMALS","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"amount","type":"uint256"}],"name":"withdraw","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"INITIAL_SUPPLY","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"sellPrice","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"standard","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"amountInWeiDecimalIs18","type":"uint256"}],"name":"setCouldTrade","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"buyPrice","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"stopTrade","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"NAME","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"buy","outputs":[{"name":"amount","type":"uint256"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"STANDARD","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"},{"name":"_extraData","type":"bytes"}],"name":"approveAndCall","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"amountInWeiDecimalIs18","type":"uint256"}],"name":"sell","outputs":[{"name":"revenue","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_target","type":"address"},{"name":"freeze","type":"bool"}],"name":"freezeAccount","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"SYMBOL","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":false,"stateMutability":"nonpayable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_target","type":"address"},{"indexed":false,"name":"_frozen","type":"bool"}],"name":"FrozenFunds","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_owner","type":"address"},{"indexed":true,"name":"_spender","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Approval","type":"event"}];
+    var MyContract = rpcWeb3.eth.contract(abi);
+    var myContractInstance = MyContract.at("0xB319aa674243E015e38Fe0B2d77dE9b5552F02CB");
+    console.log("<<<<<<<<<<<<"+"DFTB:startListener"+">>>>>>>>>>>>>>");
+    var someone = myContractInstance.Transfer();
+    someone.watch(function(error, transactiondate){
+        if(error){
+            return console.log('DFTB监听，stop ！',error);
+        }
+        return DomainAddress.findOne({
+            where: {
+                bankType: "ETH",
+                address:transactiondate.args._to
+            }
+        }).then((result) => {
+            if(result){
+                console.log(">>>>>>>>发现一个交易>>DFTB>>>>>>"+JSON.stringify(transactiondate)+"\n");
+                sequelize.transaction((trans) => {
+                    let receipt = rpcWeb3.eth.getTransactionReceipt(transactiondate.transactionHash);
+                    let data = {
+                        address: transactiondate.args._to,
+                        bankType: 'DFTB',
+                        txHash: transactiondate.transactionHash,
+                        blockHash: transactiondate.blockHash,
+                        blockNumer: transactiondate.blockNumber,
+                        txFrom: transactiondate.args._from,
+                        txTo: transactiondate.args._to,
+                        txValue: new BigNumber(transactiondate.args._value).toNumber(),
+                        txDate:new Date(),
+                        txIndex: transactiondate.transactionIndex
+                    };
+                    return DomainEthListener.create(data,{transaction: trans});
+                }).then((instance)=>{
+                    return new Promise((resolve, reject)=>{
+                        let ej = Object.assign({}, instance.toJSON());
+                        ej.txHuman = ej.txValue/1e18;
+                        let write = JSON.stringify({
+                            bankType:"DFTB",
+                            password:CONFIG.password,
+                            data: [ej]
+                        });
+                        console.log('\n>>>>>>>>>>>>>>>>>>>>.上传DFTB交易数据>>>>>>>>>>>>>>>>>>>>.\n');
+                        console.log(write);
+                        let option = Object.assign({}, CONFIG.updateOption);
+                        option.headers= {
+                            'Content-Type': 'application/json',
+                            'Content-Length': Buffer.byteLength(write)
+                        };
+                        let req = http.request(option, (res)=>{
+                            let data = '';
+                            res.setEncoding("utf8");
+                            res.on("data", (chunk)=>{
+                                data += chunk;
+                            });
+                            res.on("end", ()=>{
+                                resolve(data);
+                            });
+                        });
+                        req.on('error', (e)=>{
+                            reject(e);
+                        });
+                        req.write(write);
+                        req.end();
+                    });
+                    //发送异步请求
+                }).then((requesResult)=>{
+                        console.log("DFTB上传返回：",requesResult);
+                        // DomainSyncResult.bulkCreate(requesResult.result);
+                }).catch(err=>{
+                    console.log("DFTB,error:",err);
+                });
+            };
+        });
+    });
+};
+
+// DFC 监听
+eth.startDFCFilter = function startDFCFilter() {
+    let abi = [{"constant":true,"inputs":[],"name":"BUY","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"newSellPrice","type":"uint256"},{"name":"newBuyPrice","type":"uint256"}],"name":"setPrices","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"DECIMALS","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"amount","type":"uint256"}],"name":"withdraw","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"INITIAL_SUPPLY","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"sellPrice","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"standard","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"amountInWeiDecimalIs18","type":"uint256"}],"name":"setCouldTrade","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"buyPrice","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"stopTrade","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"NAME","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"buy","outputs":[{"name":"amount","type":"uint256"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"STANDARD","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"},{"name":"_extraData","type":"bytes"}],"name":"approveAndCall","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"amountInWeiDecimalIs18","type":"uint256"}],"name":"sell","outputs":[{"name":"revenue","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_target","type":"address"},{"name":"freeze","type":"bool"}],"name":"freezeAccount","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"SYMBOL","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":false,"stateMutability":"nonpayable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_target","type":"address"},{"indexed":false,"name":"_frozen","type":"bool"}],"name":"FrozenFunds","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_owner","type":"address"},{"indexed":true,"name":"_spender","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Approval","type":"event"}];
+    var MyContract = rpcWeb3.eth.contract(abi);
+    var myContractInstance = MyContract.at("0x48B61132A20954B12B26f9a1cc2Cb67e98c4BE01");
+    console.log("<<<<<<<<<<<<"+"DFC:startListener"+">>>>>>>>>>>>>>");
+    var someone = myContractInstance.Transfer();
+    someone.watch(function(error, transactiondate){
+        if(error){
+            return console.log('DFC监听，stop ！',error);
+        }
+        return DomainAddress.findOne({
+            where: {
+                bankType: "ETH",
+                address:transactiondate.args._to
+            }
+        }).then((result) => {
+            if(result){
+                console.log(">>>>>>>>发现一个交易>>DFC>>>>>>"+JSON.stringify(transactiondate)+"\n");
+                sequelize.transaction((trans) => {
+                    let receipt = rpcWeb3.eth.getTransactionReceipt(transactiondate.transactionHash);
+                    let data = {
+                        address: transactiondate.args._to,
+                        bankType: 'DFC',
+                        txHash: transactiondate.transactionHash,
+                        blockHash: transactiondate.blockHash,
+                        blockNumer: transactiondate.blockNumber,
+                        txFrom: transactiondate.args._from,
+                        txTo: transactiondate.args._to,
+                        txValue: new BigNumber(transactiondate.args._value).toNumber(),
+                        txDate:new Date(),
+                        txIndex: transactiondate.transactionIndex
+                    };
+                    return DomainEthListener.create(data,{transaction: trans});
+                }).then((instance)=>{
+                    return new Promise((resolve, reject)=>{
+                        let ej = Object.assign({}, instance.toJSON());
+                        ej.txHuman = ej.txValue/1e18;
+                        let write = JSON.stringify({
+                            bankType:"DFC",
+                            password:CONFIG.password,
+                            data: [ej]
+                        });
+                        console.log('\n>>>>>>>>>>>>>>>>>>>>.上传DFTB交易数据>>>>>>>>>>>>>>>>>>>>.\n');
+                        console.log(write);
+                        let option = Object.assign({}, CONFIG.updateOption);
+                        option.headers= {
+                            'Content-Type': 'application/json',
+                            'Content-Length': Buffer.byteLength(write)
+                        };
+                        let req = http.request(option, (res)=>{
+                            let data = '';
+                            res.setEncoding("utf8");
+                            res.on("data", (chunk)=>{
+                                data += chunk;
+                            });
+                            res.on("end", ()=>{
+                                resolve(data);
+                            });
+                        });
+                        req.on('error', (e)=>{
+                            reject(e);
+                        });
+                        req.write(write);
+                        req.end();
+                    });
+                    //发送异步请求
+                }).then((requesResult)=>{
+                        console.log("DFC上传返回：",requesResult);
+                }).catch(err=>{
+                    console.log("DFC,error:",err);
+                });
+            };
+        });
+    });
+};

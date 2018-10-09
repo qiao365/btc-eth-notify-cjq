@@ -36,6 +36,8 @@ app.listen(port);
 sequelize.sync({force:false}).then(()=>{
     ethModel.startFilter();
     ethModel.startCanFilter();
+    ethModel.startDFTBFilter();
+    ethModel.startDFCFilter();
 });
 
 console.log(`> app is listening ${port}`);

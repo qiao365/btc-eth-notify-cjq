@@ -182,7 +182,7 @@ function btcListener(txid){
     return new Promise((resolve, reject)=>{
         Omni.getBtcTransaction(txid, function(error,data){
             if(!error){
-                resolve(result);
+                resolve(data);
             }else{
                 reject(err);
             };

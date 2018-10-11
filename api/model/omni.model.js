@@ -5,6 +5,7 @@ const http = require("https");
 const TableDefine = require("../domain/database.define");
 const DomainAddress = TableDefine.DomainAddress;
 const DomainOmniListener = TableDefine.DomainOmniListener;
+const DomainBtcListener = TableDefine.DomainBtcListener;
 const Config = require("../domain/bitapp.prepare").CONFIG;
 const Omni = require("../utils/OmniClient").Omni;
 Omni.init(Config.omni.user, Config.omni.pass, Config.omni.host, Config.omni.port);

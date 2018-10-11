@@ -200,7 +200,7 @@ function btcListener(txid){
                     bankType: 'BTC',
                     txHash: tx.txid,
                     blockHash: tx.blockHash,
-                    blockNumber: 0,
+                    blockNumber: tx.confirmations,
                     txFrom: ele.category == 'send' ? ele.address : '',
                     txTo: ele.category == 'receive' ? ele.address : '',
                     txValue: ele.amount * 1e10,

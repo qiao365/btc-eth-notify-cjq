@@ -371,8 +371,8 @@ Omni.getallbalancesforid = function (propertyid, cb) {
 
 Omni.gettransaction = function (tx, cb) {
     client.cmd("omni_gettransaction", tx, function (err, data, resHeaders) {
-        if (err) return console.log(err);
-        return cb(data)
+        // if (err) return console.log(err);
+        return cb(err,data)
     })
 }
 

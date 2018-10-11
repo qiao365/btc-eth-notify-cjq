@@ -376,6 +376,13 @@ Omni.gettransaction = function (tx, cb) {
     })
 }
 
+//获取btc交易
+Omni.getBtcTransaction = function (tx, cb) {
+    client.cmd("gettransaction", tx, function (err, data, resHeaders) {
+        return cb(err,data)
+    })
+}
+
 Omni.getorderbook = function (id1, id2, cb) {
     if (id2 == null) {
         client.cmd("omni_getorderbook", id1, function (err, data, resHeaders) {

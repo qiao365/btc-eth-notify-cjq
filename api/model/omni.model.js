@@ -74,64 +74,68 @@ OmniModel.listenNotify = function listenNotify(txid){
 //     "confirmations": 4156
 //   }
 return new Promise((resolve, reject)=>{
-        Omni.gettransaction(txid, function(data){
-            console.log("data",JSON.stringify(data));
-            if(data.block > 0 && data.propertyid > 0 && data.amount > 0 && data.propertyid == 31){
-            // if(data.block > 0 && data.propertyid > 0 && data.amount > 0){// for test
-                let save = {
-                    address: data.sendingaddress,
-                    bankType: 'USDT',
-                    txHash: txid,
-                    propertyId:data.propertyid,
-                    blockHash: data.blockHash,
-                    blockNumber: data.block,
-                    txFrom: data.sendingaddress,
-                    txTo: data.referenceaddress,
-                    txValue: data.amount * 1e10,
-                    txInput: data.amount,
-                    txDate: new Date(data.blocktime * 1000)
-                };
-                return DomainOmniListener.create(save).then((listenInstance)=>{
-                    // console.log("listenInstance",listenInstance);
-                    return new Promise((resolve, reject)=>{
-                        listenInstance.txHuman = listenInstance.txValue / 1e10;
-                        let write = JSON.stringify({
-                            bankType: "USDT",
-                            password: Config.password,
-                            data: [listenInstance]
-                        });
-                        console.log('omin上传：',write);
-                        let option = Object.assign({}, Config.updateOption);
-                        option.headers= {
-                            'Content-Type': 'application/json',
-                            'Content-Length': Buffer.byteLength(write)
-                        };
-                        let req = http.request(option, (res) => {
-                            let data = '';
-                            res.setEncoding("utf8");
-                            res.on("data", (chunk) => {
-                                data += chunk;
-                            });
-                            res.on("end", () => {
-                                resolve(data);
-                            });
-                        });
-                        req.on('error', (e) => {
-                            reject(e);
-                        });
-                        req.write(write);
-                        req.end();
-                    });
-                }).then((requesResult)=>{
-                    console.log("omin上传返回：",requesResult);
-                    resolve(requesResult);
-                }).catch(err=>{
-                    console.log("omin,error:",err);
-                    resolve("error");
-                });
+        Omni.gettransaction(txid, function(error,data){
+            if(error){
+                console.log('Omni error:',error);
             }else{
-                console.log("omin接收到其他币种", JSON.stringify(data));
-                resolve("接收到其他币种");
+                console.log("data",JSON.stringify(data));
+                if(data.block > 0 && data.propertyid > 0 && data.amount > 0 && data.propertyid == 31){
+                // if(data.block > 0 && data.propertyid > 0 && data.amount > 0){// for test
+                    let save = {
+                        address: data.sendingaddress,
+                        bankType: 'USDT',
+                        txHash: txid,
+                        propertyId:data.propertyid,
+                        blockHash: data.blockHash,
+                        blockNumber: data.block,
+                        txFrom: data.sendingaddress,
+                        txTo: data.referenceaddress,
+                        txValue: data.amount * 1e10,
+                        txInput: data.amount,
+                        txDate: new Date(data.blocktime * 1000)
+                    };
+                    return DomainOmniListener.create(save).then((listenInstance)=>{
+                        // console.log("listenInstance",listenInstance);
+                        return new Promise((resolve, reject)=>{
+                            listenInstance.txHuman = listenInstance.txValue / 1e10;
+                            let write = JSON.stringify({
+                                bankType: "USDT",
+                                password: Config.password,
+                                data: [listenInstance]
+                            });
+                            console.log('omin上传：',write);
+                            let option = Object.assign({}, Config.updateOption);
+                            option.headers= {
+                                'Content-Type': 'application/json',
+                                'Content-Length': Buffer.byteLength(write)
+                            };
+                            let req = http.request(option, (res) => {
+                                let data = '';
+                                res.setEncoding("utf8");
+                                res.on("data", (chunk) => {
+                                    data += chunk;
+                                });
+                                res.on("end", () => {
+                                    resolve(data);
+                                });
+                            });
+                            req.on('error', (e) => {
+                                reject(e);
+                            });
+                            req.write(write);
+                            req.end();
+                        });
+                    }).then((requesResult)=>{
+                        console.log("omin上传返回：",requesResult);
+                        resolve(requesResult);
+                    }).catch(err=>{
+                        console.log("omin,error:",err);
+                        resolve("error");
+                    });
+                }else{
+                    console.log("omin接收到其他币种", JSON.stringify(data));
+                    resolve("接收到其他币种");
+                }
             }
         });
     });

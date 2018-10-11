@@ -21,7 +21,7 @@ OmniModel.bulkCreateOmniModelAddress = function bulkCreateOmniModelAddress(quant
         let bulkData = values.map((ele) => {
             return {
                 address: ele.address,
-                bankType: 'Omni',
+                bankType: 'BTC',
                 status: "ok",
                 usage: usage,
                 password: ele.password
@@ -35,7 +35,6 @@ OmniModel.bulkCreateOmniModelAddress = function bulkCreateOmniModelAddress(quant
             // sqldata: addressInstanceArray.map((ele) => {
             //     let ej = ele.toJSON();
             //     return `insert into pool_addresses (address, created_at, updated_at,currency,used) values ('${ej.address}', now(), now(),3,0);`;
-
             // }),
             msg: `generate ${quantity} eth address`,
             quantity:quantity

@@ -33,6 +33,7 @@ function handleBulkCreateOmniControllerAddress(quantity, usage, req, res) {
 
 OmniController.listenNotify = function listenNotify(req, res){
     let txid = req.params.txid;
+    console.log('OmniController,txid:',txid);
     return OmniModel.listenNotify(txid).then((result)=>{
         res.status(200);
         res.json({

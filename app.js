@@ -13,8 +13,8 @@ app.use(bodyParser.urlencoded({ extended:true }));
 app.use(bodyParser.json());
 
 
-app.post("/blockchain/address/eth/bulk/:usage/:quantity", controllerOfEth.bulkCreateEthAddressWithUsage);
-app.post("/blockchain/address/omni/bulk/:usage/:quantity", controllerOfOmni.bulkCreateOmniAddressWithUsage);
+app.post("/blockchain/addresses/eth/bulk/:usage/:quantity", controllerOfEth.bulkCreateEthAddressWithUsage);
+app.post("/blockchain/addresses/omni/bulk/:usage/:quantity", controllerOfOmni.bulkCreateOmniAddressWithUsage);
 
 //mobipromo.sell专用
 app.post("/blockchain/address/eth/bulk/mobipromo/:usage/:quantity", controllerOfEth.bulkCreateEthAddressWithUsageMobipromoSell);

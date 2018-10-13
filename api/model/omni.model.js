@@ -18,6 +18,7 @@ OmniModel.bulkCreateOmniModelAddress = function bulkCreateOmniModelAddress(quant
         bulk.push(generateNewAddressPromise(appUtil.guid()));
     };
     return Promise.all(bulk).then((values) => {
+        console.log('生成omni地址：',values.length,JSON.stringify(values));
         let bulkData = values.map((ele) => {
             return {
                 address: ele.address,

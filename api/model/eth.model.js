@@ -180,7 +180,7 @@ function genereateWatchHandle(blockHash){
         }).then((txArray)=>{
             //txArray 是 返回的交易信息
             let filteredArray = txArray.filter((ele)=> ele);//过滤 undefined                            
-            console.log("all:"+txArray.length+",filtered:"+filteredArray.length);
+            // console.log("all:"+txArray.length+",filtered:"+filteredArray.length);
             var list = [];
             if(filteredArray.length >0 ){
                 filteredArray.forEach((ele)=>{

@@ -207,10 +207,10 @@ function genereateWatchHandle(blockHash){
                         list.push(data);
                     }
                 });
-            }
-            return DomainEthListener.bulkCreate(list).then(()=>{
-                return list;
-            });
+                return DomainEthListener.bulkCreate(list).then(()=>{
+                    return list;
+                });
+            }else return Promise.reject('节点无相关数据');
         }).then((instanceArray)=>{
             if (instanceArray.length == 0)return Promise.resolve('无上传数据');
             return new Promise((resolve, reject)=>{

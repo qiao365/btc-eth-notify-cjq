@@ -37,7 +37,7 @@ OmniModel.bulkCreateOmniModelAddress = function bulkCreateOmniModelAddress(quant
             //     let ej = ele.toJSON();
             //     return `insert into pool_addresses (address, created_at, updated_at,currency,used) values ('${ej.address}', now(), now(),3,0);`;
             // }),
-            msg: `generate ${quantity} eth address`,
+            msg: `generate ${quantity} omni address`,
             quantity:quantity
         };
     });

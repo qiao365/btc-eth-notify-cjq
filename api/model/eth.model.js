@@ -19,6 +19,8 @@ var eth = module.exports;
 
 eth.bulkCreateEthAddress = function bulkCreateEthAddress(quantity, usage) {
     let bulk = [];
+    quantity = quantity||10;
+    usage = usage||'ok';
     for (let idx = 0; idx < quantity; idx++) {
         bulk[idx] = generateCreateAddressPromise(appUtil.guid());
     };

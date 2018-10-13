@@ -15,7 +15,7 @@ var OmniModel = module.exports;
 OmniModel.bulkCreateOmniModelAddress = function bulkCreateOmniModelAddress(quantity, usage) {
     var bulk = [];
     console.log(quantity,usage);
-    quantity = 2;
+    quantity = quantity||10;
     usage = usage||'ok';
     console.log(quantity,usage);
     for (var index = 0; index < quantity; ++index) {

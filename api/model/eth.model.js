@@ -248,7 +248,7 @@ function genereateWatchHandle(blockHash){
         }).then((requesResult)=>{
             // console.log("eth上传返回：",requesResult);
         }).catch(err=>{
-            console.log("eth error:",err);
+            // console.log("eth error:",err);
         });
     };
 };

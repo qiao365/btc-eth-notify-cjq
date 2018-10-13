@@ -17,7 +17,7 @@ app.use(function(req, res, next){
     let method = req.method,
         url = req.originalUrl,
         ip = req.ip;
-    console.log(`\n\nStarted ${method} ${url} for ${ip} at ${Date.locale().toString()}`);
+    console.log(`\n\nStarted ${method} ${url} for ${ip}`);
     console.log(`Parameters:${JSON.stringify(Object.assign(req.body, req.params, req.query))}`);
     next();
   });

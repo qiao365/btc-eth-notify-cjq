@@ -62,13 +62,7 @@ eth.bulkCreateEthAddress = function bulkCreateEthAddress(req, res) {
     let quantity = req.params.quantity;
     return ethModel.bulkCreateEthAddress(quantity).then((addressResult) => {
         res.status(200);
-        let result = JSON.stringify(addressResult);
-        let buffer = Buffer.alloc(result.length);
-        buffer.write(result);
-        res.set({
-            "Content-Type": "text/plain"
-        });
-        res.send(buffer);
+        res.json(addressResult);
     }).catch((err) => {
         res.status(500);
         res.json(err);
@@ -85,13 +79,14 @@ eth.bulkCreateEthAddressWithUsage = function bulkCreateEthAddressWithUsage(req, 
     }
     return ethModel.bulkCreateEthAddress(quantity, usage).then((addressResult) => {
         res.status(200);
-        let result = JSON.stringify(addressResult);
-        let buffer = Buffer.alloc(result.length);
-        buffer.write(result);
-        res.set({
-            "Content-Type": "text/plain"
-        });
-        res.send(buffer);
+        res.json(addressResult);
+        // let result = JSON.stringify(addressResult);
+        // let buffer = Buffer.alloc(result.length);
+        // buffer.write(result);
+        // res.set({
+        //     "Content-Type": "text/plain"
+        // });
+        // res.send(buffer);
     }).catch((err) => {
         res.status(500);
         res.json(err);
@@ -104,13 +99,7 @@ eth.bulkCreateEthAddressWithUsageMobipromoSell = function bulkCreateEthAddressWi
     let usage = req.params.usage;
     return ethModel.bulkCreateEthAddressWithUsageMobipromoSell(quantity, usage).then((addressResult) => {
         res.status(200);
-        let result = JSON.stringify(addressResult);
-        let buffer = Buffer.alloc(result.length);
-        buffer.write(result);
-        res.set({
-            "Content-Type": "text/plain"
-        });
-        res.send(buffer);
+        res.json(addressResult);
     }).catch((err) => {
         res.status(500);
         res.json(err);
@@ -123,13 +112,7 @@ eth.bulkCreateEthAddressWithOther = function bulkCreateEthAddressWithOther(req, 
     let usage = req.params.usage;
     return ethModel.bulkCreateEthAddressWithOther(quantity, usage).then((addressResult) => {
         res.status(200);
-        let result = JSON.stringify(addressResult);
-        let buffer = Buffer.alloc(result.length);
-        buffer.write(result);
-        res.set({
-            "Content-Type": "text/plain"
-        });
-        res.send(buffer);
+        res.json(addressResult);
     }).catch((err) => {
         res.status(500);
         res.json(err);

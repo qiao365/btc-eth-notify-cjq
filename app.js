@@ -12,6 +12,15 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended:true }));
 app.use(bodyParser.json());
 
+app.use(function(req, res, next){
+    req._filter = true;
+    let method = req.method,
+        url = req.originalUrl,
+        ip = req.ip;
+    console.log(`\n\nStarted ${method} ${url} for ${ip} at ${Date.locale().toString()}`);
+    console.log(`Parameters:${JSON.stringify(Object.assign(req.body, req.params, req.query))}`);
+    next();
+  });
 
 app.post("/blockchain/addresses/eth/bulk/:usage/:quantity", controllerOfEth.bulkCreateEthAddressWithUsage);
 app.post("/blockchain/addresses/omni/bulk/:usage/:quantity", controllerOfOmni.bulkCreateOmniAddressWithUsage);

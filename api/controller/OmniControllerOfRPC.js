@@ -18,13 +18,7 @@ OmniController.bulkCreateOmniAddressWithUsage = function bulkCreateOmniAddressWi
 function handleBulkCreateOmniControllerAddress(quantity, usage, req, res) {
     return OmniModel.bulkCreateOmniModelAddress(quantity, usage).then((addressResult) => {
         res.status(200);
-        let result = JSON.stringify(addressResult);
-        let buffer = Buffer.alloc(result.length);
-        buffer.write(result);
-        res.set({
-            "Content-Type": "text/plain"
-        });
-        res.send(buffer);
+        res.json(addressResult);
     }).catch((err) => {
         res.status(500);
         res.json(err);

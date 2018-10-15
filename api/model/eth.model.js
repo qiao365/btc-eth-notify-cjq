@@ -2,7 +2,7 @@
 
 const appUtil = require("./util.js");
 const net = require('net');
-const http = require("https");
+const http = require("http");
 const TableDefine = require("../domain/database.define");
 const DomainAddress = TableDefine.DomainAddress;
 const DomainEthListener = TableDefine.DomainEthListener;

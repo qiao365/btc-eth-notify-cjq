@@ -243,12 +243,14 @@ function genereateWatchHandle(blockHash){
                 });
                 req.write(write);
                 req.end();
+            }).catch(err=>{
+                console.log("eth error:",err);
             });
             //发送异步请求
         }).then((requesResult)=>{
-            // console.log("eth上传返回：",requesResult);
+            console.log("eth上传完成",requesResult);
         }).catch(err=>{
-            // console.log("eth error:",err);
+            console.log("eth error:",err);
         });
     };
 };

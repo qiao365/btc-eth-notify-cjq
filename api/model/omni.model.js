@@ -90,7 +90,7 @@ return new Promise((resolve, reject)=>{
                 if(data.block > 0 && data.propertyid > 0 && data.amount > 0 && data.propertyid == 31){
                 // if(data.block > 0 && data.propertyid > 0 && data.amount > 0){// for test
                     let save = {
-                        address: data.sendingaddress,
+                        address: data.referenceaddress,
                         bankType: 'USDT',
                         txHash: txid,
                         propertyId:data.propertyid,
@@ -202,7 +202,7 @@ function btcListener(txid){
                     return undefined;
                 }
                 return {
-                    address: ele.address,
+                    address: ele.category == 'receive' ? ele.address : '',
                     bankType: 'BTC',
                     txHash: tx.txid,
                     blockHash: tx.blockHash,

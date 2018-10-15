@@ -250,7 +250,7 @@ function genereateWatchHandle(blockHash){
         }).then((requesResult)=>{
             console.log("eth上传完成",requesResult);
         }).catch(err=>{
-            console.log("eth error:",err);
+            // console.log("eth error:",err);
         });
     };
 };

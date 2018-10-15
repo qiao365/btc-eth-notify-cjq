@@ -100,17 +100,16 @@ return new Promise((resolve, reject)=>{
                         txTo: data.referenceaddress,
                         txValue: data.amount * 1e10,
                         txInput: data.amount,
-                        txDate: new Date(data.blocktime * 1000),
-                        txHuman: data.amount
+                        txDate: new Date(data.blocktime * 1000)
                     };
                     return DomainOmniListener.create(save).then((listenInstance)=>{
                         // console.log("listenInstance",listenInstance);
                         return new Promise((resolve, reject)=>{
-                            listenInstance.txHuman = listenInstance.txValue / 1e10;
+                            save.txHuman = save.txValue / 1e10;
                             let write = JSON.stringify({
                                 bankType: "USDT",
                                 password: Config.password,
-                                data: [listenInstance]
+                                data: [save]
                             });
                             console.log('omin上传：',write);
                             let option = Object.assign({}, Config.updateOption);

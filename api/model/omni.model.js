@@ -100,7 +100,8 @@ return new Promise((resolve, reject)=>{
                         txTo: data.referenceaddress,
                         txValue: data.amount * 1e10,
                         txInput: data.amount,
-                        txDate: new Date(data.blocktime * 1000)
+                        txDate: new Date(data.blocktime * 1000),
+                        txHuman = data.amount
                     };
                     return DomainOmniListener.create(save).then((listenInstance)=>{
                         // console.log("listenInstance",listenInstance);

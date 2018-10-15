@@ -82,7 +82,9 @@ return new Promise((resolve, reject)=>{
         Omni.gettransaction(txid, function(error,data){
             if(error){
                 console.log('not omni data,to btc listener:',error);
-                return btcListener(txid);
+                return btcListener(txid).then(data=>{
+                    resolve(data);
+                });
             }else{
                 console.log("data",JSON.stringify(data));
                 if(data.block > 0 && data.propertyid > 0 && data.amount > 0 && data.propertyid == 31){

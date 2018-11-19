@@ -1,6 +1,6 @@
 # nodethapp
 # 介绍 #
-这是为UBC TOKEN Package提供的节点监听服务。基于WEB3.js上的封装。
+这是btc\eth节点监听服务。基于WEB3.js上的封装。
 
 # 环境 #
   * go-ethereum 1.7+ stable
@@ -26,8 +26,8 @@
 这里认为环境已经安装好
 
 ## 数据库 ##
-  * createuser -P aubitex -U postgres
-  * createdb -O aubitex aubitex -U postgres
+  * createuser -P aubi -U postgres
+  * createdb -O aubi aubi -U postgres
   
 
 
